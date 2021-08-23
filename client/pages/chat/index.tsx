@@ -1,8 +1,30 @@
 import React, { PureComponent } from "react";
 
+import io from "socket.io-client";
+let socket;
+const ENDPOINT = "localhost:5000";
+
+
 import { ChannelUsers } from "../../src/components";
 
 export default class extends PureComponent {
+    // This will return the URL parameters written before by the human
+    static getInitialProps({ query }) {
+        const { name, channel } = query;
+
+        return { name, channel }
+      }
+
+
+    componentDidMount() {
+        const { name, channel } = this.props;
+
+        socket = io(ENDPOINT);
+
+        socket.emit("join", { name, channel });
+    }
+
+
     render() {
         return (
             <div className="h-screen grid grid-cols-2">
