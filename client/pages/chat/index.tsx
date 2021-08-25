@@ -4,7 +4,6 @@ import io from "socket.io-client";
 let socket;
 const ENDPOINT = "localhost:5000";
 
-
 import { ChannelUsers } from "../../src/components";
 
 export default class extends PureComponent {
@@ -20,17 +19,19 @@ export default class extends PureComponent {
         const { name, channel } = this.props;
 
         socket = io(ENDPOINT);
-
+        
         socket.emit("join", { name, channel });
     }
 
 
     render() {
+        const { channel } = this.props;
+
         return (
             <div className="h-screen grid grid-cols-2">
                 <div className="flex items-center justify-center">
                     <div className="bg-white rounded-lg border-2 border-purple-900 p-4 w-1/2">
-                        <h2 className="text-purple-600 p-2 border-b border-gray-400">#Channel_name</h2>
+                        <h2 className="text-purple-600 p-2 border-b border-gray-400">#{channel}</h2>
                         
                         <div className="h-60 py-4 px-2">
                             Messages here
