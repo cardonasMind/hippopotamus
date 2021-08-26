@@ -4,11 +4,12 @@ import io from "socket.io-client";
 const ENDPOINT = "localhost:5000";
 let socket = io(ENDPOINT);
 
-import { ChannelUsers } from "../../src/components";
+import { Messages, ChannelUsers } from "../../src/components";
 
 export default class extends PureComponent {
     state = {
         message: "",
+        messages: [],
         users: []
     };
 
@@ -29,7 +30,7 @@ export default class extends PureComponent {
         });
 
         socket.on("message", message => {
-            console.log(message);
+            this.setState(prevState => ({ messages: [...prevState.messages, message] }) );
         });
 
         socket.on("channelData", users => {
@@ -56,18 +57,16 @@ export default class extends PureComponent {
     }
 
     render() {
-        const { message, users } = this.state;
+        const { message, messages, users } = this.state;
         const { name, channel } = this.props;
 
         return (
-            <div className="h-screen grid grid-cols-2">
+            <div className="h-screen grid md:grid-cols-2 my-4">
                 <div className="flex items-center justify-center">
-                    <div className="bg-white rounded-lg border-2 border-purple-900 p-4 w-1/2">
+                    <div className="bg-white rounded-lg border-2 border-purple-900 p-4">
                         <h2 className="text-purple-600 p-2 border-b border-gray-400">#{channel}</h2>
                         
-                        <div className="h-60 py-4 px-2">
-                            Messages here
-                        </div>
+                        <Messages messages={messages} currentName={name} />
 
                         <div className="flex gap-2">
                             <input className="outline-none w-full border-b border-gray-400 focus:border-black px-2" 
@@ -78,7 +77,7 @@ export default class extends PureComponent {
                         </div>
                     </div>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center mt-10 md:mt-0 mx-auto md:mx-0">
                     <div>
                         <h1 className="text-4xl font-bold mb-4">
                             Real-time chat <span role="img" aria-label="emoji">💬</span>
@@ -86,6 +85,8 @@ export default class extends PureComponent {
                         <h2 className="text-3xl">
                             Try it out! <span role="img" aria-label="emoji">⬅️</span>
                         </h2>
+
+                        <p className="mt-2">Emojis are supported! (Try with :D | :wink: | :100: )</p>
                         
                         <ChannelUsers users={users} currentName={name} />
                     </div>
