@@ -42,7 +42,7 @@ export default class extends PureComponent {
 
     render() {
         const { users } = this.state;
-        const { channel } = this.props;
+        const { name, channel } = this.props;
 
         return (
             <div className="h-screen grid grid-cols-2">
@@ -69,7 +69,7 @@ export default class extends PureComponent {
                             Try it out! <span role="img" aria-label="emoji">⬅️</span>
                         </h2>
                         
-                        <ChannelUsers users={users}/>
+                        <ChannelUsers users={users} currentName={name} />
                     </div>
                 </div>
             </div>
