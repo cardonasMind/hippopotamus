@@ -8,6 +8,7 @@ import { ChannelUsers } from "../../src/components";
 
 export default class extends PureComponent {
     state = {
+        message: "",
         users: []
     };
 
@@ -16,7 +17,8 @@ export default class extends PureComponent {
         const { name, channel } = query;
 
         return { name, channel }
-      }
+    }
+
 
 
     componentDidMount() {
@@ -40,8 +42,21 @@ export default class extends PureComponent {
     }
 
 
+
+    handleChange = e => this.setState({ message: e.target.value });
+
+    handleEnterKeyPress = e => e.key === "Enter" && this.sendMessage();
+    
+    sendMessage = () => {
+        const { message } = this.state;
+    
+        if(message !== "") {
+            socket.emit("sendMessage", message, () => this.setState({ message: "" }) );
+        }
+    }
+
     render() {
-        const { users } = this.state;
+        const { message, users } = this.state;
         const { name, channel } = this.props;
 
         return (
@@ -55,8 +70,11 @@ export default class extends PureComponent {
                         </div>
 
                         <div className="flex gap-2">
-                            <input className="outline-none w-full border-b border-gray-400 focus:border-black px-2" type="text" name="message" placeholder="Say hi!" />
-                            <button className="bg-yellow-400 hover:bg-yellow-300 py-2 px-4 border border-black">Send</button>
+                            <input className="outline-none w-full border-b border-gray-400 focus:border-black px-2" 
+                            type="text" name="message" placeholder="Say hi!" value={message} onChange={this.handleChange} 
+                            onKeyPress={this.handleEnterKeyPress} />
+                            <button className="bg-yellow-400 hover:bg-yellow-300 py-2 px-4 border border-black" 
+                            onClick={this.sendMessage}>Send</button>
                         </div>
                     </div>
                 </div>
