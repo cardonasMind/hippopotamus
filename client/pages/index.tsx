@@ -42,7 +42,7 @@ export default class extends PureComponent {
             <div className="grid gap-1">
               <p>Channel *</p>
               <input className="p-2 rounded border border-gray-400" type="text" placeholder="lobby by default"
-              name="channel" value={channel} onChange={this.handleChange} />
+              name="channel" value={channel} onChange={this.handleChange}/>
             </div>
 
             <button className="bg-yellow-400 hover:bg-yellow-300 py-2 px-4 mt-6 border border-black"

@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
 
 import io from "socket.io-client";
-let socket;
 const ENDPOINT = "localhost:5000";
+let socket = io(ENDPOINT);
 
 import { ChannelUsers } from "../../src/components";
 
@@ -17,10 +17,18 @@ export default class extends PureComponent {
 
     componentDidMount() {
         const { name, channel } = this.props;
-
-        socket = io(ENDPOINT);
         
-        socket.emit("join", { name, channel });
+        socket.emit("join", { name, channel }, error => {
+            error && alert(error);
+        });
+
+        socket.on("message", message => {
+            console.log(message);
+        });
+    }
+
+    componentWillUnmount() {
+        socket.disconnect();
     }
 
 
