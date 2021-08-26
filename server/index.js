@@ -28,6 +28,8 @@ io.on("connection", socket => {
         
         // An this for all the users in the same channel
         socket.broadcast.to(user.channel).emit("message", { user: "admin", text: `${user.name} has joined!`} );
+    
+        io.to(user.channel).emit("channelData", { users: getUsersInChannel(user.channel) } );
     });
 
 
@@ -46,6 +48,7 @@ io.on("connection", socket => {
 
         if(user) {
             io.to(user.channel).emit("message", { user: "admin", text: `${user.name} has left.` } );
+            io.to(user.channel).emit("channelData", { users: getUsersInChannel(user.channel) } );
         }
     });
 });

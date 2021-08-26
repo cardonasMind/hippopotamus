@@ -7,6 +7,10 @@ let socket = io(ENDPOINT);
 import { ChannelUsers } from "../../src/components";
 
 export default class extends PureComponent {
+    state = {
+        users: []
+    };
+
     // This will return the URL parameters written before by the human
     static getInitialProps({ query }) {
         const { name, channel } = query;
@@ -25,6 +29,10 @@ export default class extends PureComponent {
         socket.on("message", message => {
             console.log(message);
         });
+
+        socket.on("channelData", users => {
+            this.setState(users);
+        });
     }
 
     componentWillUnmount() {
@@ -33,6 +41,7 @@ export default class extends PureComponent {
 
 
     render() {
+        const { users } = this.state;
         const { channel } = this.props;
 
         return (
@@ -60,7 +69,7 @@ export default class extends PureComponent {
                             Try it out! <span role="img" aria-label="emoji">⬅️</span>
                         </h2>
                         
-                        <ChannelUsers />
+                        <ChannelUsers users={users}/>
                     </div>
                 </div>
             </div>
