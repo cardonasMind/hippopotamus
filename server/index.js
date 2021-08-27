@@ -1,12 +1,14 @@
 const http = require("http");
 const express = require("express");
 const socketio = require('socket.io');
+const cors = require("cors");
 
 const router = require("./router");
 
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server, { cors: { origin: "https://hippopotamus-client.vercel.app", credentials: true } } );
+//const io = socketio(server, { cors: { origin: "https://hippopotamus-client.vercel.app", credentials: true } } );
+const io = socketio(server);
 
 const { addUser, removeUser, getUser, getUsersInChannel } = require("./users");
 
