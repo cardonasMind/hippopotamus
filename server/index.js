@@ -7,7 +7,7 @@ const router = require("./router");
 
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server/*, { cors: { origin: "http://localhost:3000", credentials: true } } */);
+const io = socketio(server, { cors: { origin: "https://hippopotamus-client.vercel.app", credentials: true } } );
 
 const { addUser, removeUser, getUser, getUsersInChannel } = require("./users");
 
