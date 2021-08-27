@@ -12,16 +12,12 @@ const io = socketio(server);
 const { addUser, removeUser, getUser, getUsersInChannel } = require("./users");
 
 const corsOptions = {
-    origin: "https://hippopotamus-client.vercel.app"
+    origin: "https://hippopotamus-client.vercel.app/",
+    credentials: true
 }
 
 app.use(cors(corsOptions));
 app.use(router);
-/*app.use(cors({
-    origin: "",
-    credentials: true,
-    optionsSuccessStatus: 200
-}));*/
 
 io.on("connection", socket => {
     socket.on("join", ({ name, channel }, callback) => {
