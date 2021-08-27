@@ -13,7 +13,10 @@ const io = socketio(server);
 const { addUser, removeUser, getUser, getUsersInChannel } = require("./users");
 
 app.use(router);
-app.use(cors());
+app.use(cors({
+    origin: ['https://hippopotamus-client.vercel.app'],
+    credentials: true
+}));
 
 io.on("connection", socket => {
     socket.on("join", ({ name, channel }, callback) => {
