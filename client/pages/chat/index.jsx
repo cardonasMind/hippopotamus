@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 
 import io from "socket.io-client";
-const ENDPOINT = "https://hippopotamus-server.herokuapp.com/";
+const ENDPOINT = "https://hippopotamus-server.herokuapp.com";
 let socket = io(ENDPOINT);
 
 import { Messages, ChannelUsers } from "../../src/components";
