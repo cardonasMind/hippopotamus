@@ -14,7 +14,7 @@ const { addUser, removeUser, getUser, getUsersInChannel } = require("./users");
 const corsOptions = {
     origin: "https://hippopotamus-client.vercel.app/",
     credentials: true,
-    allowedHeaders: "Content-Type, Authorization"
+    allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept"
 }
 
 app.use(cors(corsOptions));
