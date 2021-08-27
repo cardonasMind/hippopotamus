@@ -7,9 +7,6 @@ const router = require("./router");
 
 const app = express();
 const server = http.createServer(app);
-
-app.use(router);
-
 const io = socketio(server);
 
 const { addUser, removeUser, getUser, getUsersInChannel } = require("./users");
@@ -21,8 +18,7 @@ const { addUser, removeUser, getUser, getUsersInChannel } = require("./users");
 }
 
 app.use(cors(corsOptions));*/
-
-
+app.use(router);
 
 io.on("connection", socket => {
     socket.on("join", ({ name, channel }, callback) => {
