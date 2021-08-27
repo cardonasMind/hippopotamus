@@ -7,6 +7,9 @@ const router = require("./router");
 
 const app = express();
 const server = http.createServer(app);
+
+app.use(router);
+
 const io = socketio(server);
 
 const { addUser, removeUser, getUser, getUsersInChannel } = require("./users");
@@ -19,15 +22,7 @@ const { addUser, removeUser, getUser, getUsersInChannel } = require("./users");
 
 app.use(cors(corsOptions));*/
 
-app.use((req, res, next) => {
-    //Enabling CORS
-    res.header("Access-Control-Allow-Origin", "https://hippopotamus-client.vercel.app/chat");
-    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
-    next();
-});
 
-app.use(router);
 
 io.on("connection", socket => {
     socket.on("join", ({ name, channel }, callback) => {
