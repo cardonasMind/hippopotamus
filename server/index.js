@@ -13,6 +13,7 @@ const io = socketio(server);
 const { addUser, removeUser, getUser, getUsersInChannel } = require("./users");
 
 app.use(router);
+app.use(cors());
 
 io.on("connection", socket => {
     socket.on("join", ({ name, channel }, callback) => {
