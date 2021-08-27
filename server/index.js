@@ -11,13 +11,22 @@ const io = socketio(server);
 
 const { addUser, removeUser, getUser, getUsersInChannel } = require("./users");
 
-const corsOptions = {
+/*const corsOptions = {
     origin: "https://hippopotamus-client.vercel.app/",
     credentials: true,
     allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept"
 }
 
-app.use(cors(corsOptions));
+app.use(cors(corsOptions));*/
+
+app.use((req, res, next) => {
+    //Enabling CORS
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+    next();
+});
+
 app.use(router);
 
 io.on("connection", socket => {
