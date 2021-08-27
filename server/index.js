@@ -1,7 +1,6 @@
 const http = require("http");
 const express = require("express");
 const socketio = require('socket.io');
-const cors = require("cors");
 
 const router = require("./router");
 
@@ -11,7 +10,6 @@ const io = socketio(server, { cors: { origin: "https://hippopotamus-client.verce
 
 const { addUser, removeUser, getUser, getUsersInChannel } = require("./users");
 
-app.use(cors());
 app.use(router);
 
 io.on("connection", socket => {
