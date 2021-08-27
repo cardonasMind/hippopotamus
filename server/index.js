@@ -7,15 +7,15 @@ const router = require("./router");
 
 const app = express();
 const server = http.createServer(app);
-//const io = socketio(server, { cors: { origin: "https://hippopotamus-client.vercel.app", credentials: true } } );
 const io = socketio(server);
 
 const { addUser, removeUser, getUser, getUsersInChannel } = require("./users");
 
 app.use(router);
 app.use(cors({
-    origin: ['https://hippopotamus-client.vercel.app'],
-    credentials: true
+    origin: "https://hippopotamus-client.vercel.app/",
+    credentials: true,
+    optionsSuccessStatus: 200
 }));
 
 io.on("connection", socket => {
