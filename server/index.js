@@ -5,19 +5,15 @@ const cors = require("cors");
 
 const router = require("./router");
 
+const PORT = process.env.PORT || 5000;
+
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
 const { addUser, removeUser, getUser, getUsersInChannel } = require("./users");
 
-/*const corsOptions = {
-    origin: "https://hippopotamus-client.vercel.app/",
-    credentials: true,
-    allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept"
-}*/
-
-app.use(cors({credentials: true, origin: true}));
+app.use(cors({ origin: "https://hippopotamus-client.vercel.app/" }));
 app.use(router);
 
 io.on("connection", socket => {
@@ -59,4 +55,4 @@ io.on("connection", socket => {
     });
 });
 
-server.listen(process.env.PORT || 5000, () => console.log(`Server has started.`));
+server.listen(PORT, () => console.log(`Server has started on port ${PORT}`));
