@@ -15,9 +15,9 @@ const { addUser, removeUser, getUser, getUsersInChannel } = require("./users");
     origin: "https://hippopotamus-client.vercel.app/",
     credentials: true,
     allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept"
-}
+}*/
 
-app.use(cors(corsOptions));*/
+app.use(cors());
 app.use(router);
 
 io.on("connection", socket => {
