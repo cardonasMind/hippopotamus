@@ -1,7 +1,7 @@
 const http = require("http");
 const express = require("express");
-const { Server } = require('socket.io');
-const cors = require("cors");
+const socketio = require('socket.io');
+//const cors = require("cors");
 
 const router = require("./router");
 
@@ -9,11 +9,15 @@ const PORT = process.env.PORT || 5000;
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = socketio(server, {
+    cors: {
+        origin: "https://hippopotamus-client.vercel.app",
+        methods: ["GET", "POST"]
+    }
+});
 
 const { addUser, removeUser, getUser, getUsersInChannel } = require("./users");
 
-app.use(cors({ origin: "https://hippopotamus-client.vercel.app/" }));
 app.use(router);
 
 io.on("connection", socket => {
